@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, useState } from "react";
 import { Form, Button, Row, Col, InputGroup } from "react-bootstrap";
 
 class RegistrationForm extends Component {
@@ -6,28 +6,38 @@ class RegistrationForm extends Component {
     super(props);
     this.state = {
       fullName: "",
-      username: "",
+      validFullName: false,
+      userName: "",
+      validUserName: false,
       email: "",
       phone: "",
       password: "",
-      URL: "",
+      url: "",
+      formValid: false
     };
-    this.handleInpurChange = this.handleInpurChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
+  handleInputChange = (event) => {
+    const value = event.target.value;
+    const name = event.target.name;
 
-  handleInpurChange = (event) => {
-    const value = event.target.value
-    const name = event.target.name
-    
-    this.setState({
-      [name] : value
-    })
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => {
+        this.validateField(name, value);
+      }
+    );
   };
+
   handleSubmit = (event) => {
     console.log(this.state);
     event.preventDefault();
   };
+
+  validateField(fieldName, value) {
+
+  }
 
   render() {
     return (
@@ -37,19 +47,19 @@ class RegistrationForm extends Component {
             <Form.Label>Full Name: </Form.Label>
             <Form.Control
               type="text"
-              name="fullname"
-              value={this.state.value}
-              onChange={this.handleInpurChange}
-              placeholder="type your full name...."
+              name="fullName"
+              value={this.state.fullName}
+              onChange={this.handleInputChange}
+              placeholder="Enter your full name"
             ></Form.Control>
           </Form.Group>
           <Form.Group as={Col}>
             <Form.Label>User Name: </Form.Label>
             <Form.Control
               type="text"
-              name="username"
-              value={this.state.value}
-              onChange={this.handleInpurChange}
+              name="userName"
+              value={this.state.userName}
+              onChange={this.handleInputChange}
               placeholder="type your user name here...."
             ></Form.Control>
           </Form.Group>
@@ -60,8 +70,8 @@ class RegistrationForm extends Component {
             <Form.Control
               type="email"
               name="email"
-              value={this.state.value}
-              onChange={this.handleInpurChange}
+              value={this.state.email}
+              onChange={this.handleInputChange}
               placeholder="type your email here...."
             ></Form.Control>
           </Form.Group>
@@ -70,8 +80,8 @@ class RegistrationForm extends Component {
             <Form.Control
               type="text"
               name="phone"
-              value={this.state.value}
-              onChange={this.handleInpurChange}
+              value={this.state.phone}
+              onChange={this.handleInputChange}
               placeholder="type your phone number here...."
             ></Form.Control>
           </Form.Group>
@@ -83,8 +93,8 @@ class RegistrationForm extends Component {
               <Form.Control
                 type="password"
                 name="password"
-                value={this.state.value}
-                onChange={this.handleInpurChange}
+                value={this.state.password}
+                onChange={this.handleInputChange}
                 placeholder="type your password"
                 aria-describedby="basic-addon2"
               />
@@ -96,9 +106,9 @@ class RegistrationForm extends Component {
             <Form.Label>Facebook URL Verification: </Form.Label>
             <Form.Control
               type="url"
-              name="URL"
-              value={this.state.value}
-              onChange={this.handleInpurChange}
+              name="url"
+              value={this.state.url}
+              onChange={this.handleInputChange}
               placeholder="type your URL here...."
             ></Form.Control>
           </Form.Group>
@@ -110,5 +120,4 @@ class RegistrationForm extends Component {
     );
   }
 }
-
 export default RegistrationForm;
